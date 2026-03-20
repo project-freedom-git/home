@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- =========================== -->
+    <!-- SECTION 1: PAGE TITLE & META -->
+    <!-- =========================== -->
+    <title>Choose Your Path - Project Freedom</title>
+    <meta name="description" content="Choose your path with Project Freedom.">
+    
+ 
+
+<!-- Three.js Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    
+    <!-- =========================== -->
+    <!-- SECTION 2: FONTS & ICONS -->
+    <!-- =========================== -->
+    <!-- Import Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://bucket.mlcdn.com/a/3336/3336910/images/382c8eeb57b161dfa3bdb3e38863ec268f76c889.png">
+
+
+
+
+	
+
+    <!-- =========================== -->
+    <!-- SECTION 3: BASE CSS STYLES -->
+    <!-- =========================== -->
+    <style>
+        /* --- AIM Brand Styles --- */
+        :root {
+            --skin-color: #ff5011;
+            --mirage-color: hsl(210, 10%, 23%);
+            --title-color: hsl(242, 8%, 98%);
+            --text-color: hsl(242, 8%, 80%);
+            --body-color: #0d0d0d;
+            --box-color: hsl(242, 14%, 12%);
+            --body-font: 'Inter', sans-serif;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            --small-font-size: 0.95rem;
+            --h3-font-size: 1.25rem;
+            --smaller-font-size: 0.75rem;
+            --mb15: 0.75rem;
+            --mb3: 1.5rem;
+        }
+
+        /* --- Base & Scrollbar --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        
+        
+        
+        body {
+            margin: 0;
+            font-family: var(--body-font); /* Applied Inter font */
+            background-color: var(--body-color); /* Applied AIM body color */
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 10rem; /* Space for fixed nav */
+            overflow-x: hidden;
+        }
+        
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; cursor: pointer; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #333; }
+        ::-webkit-scrollbar-thumb { background: var(--skin-color); border-radius: 4px; }
+        
+        /* Utility container class */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* --- Loader Styles --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =========================== */
+        /* SECTION 4: NAVIGATION BAR */
+        /* =========================== */
+        
+        #nav-bar {
+            position: fixed; 
+            top: 2rem; 
+            left: 50%; 
+            transform: translateX(-50%);
+            background: rgba(25, 25, 25, 0.85); 
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--box-color); 
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem; 
+            display: flex; 
+            align-items: center;
+            max-width: 1100px; 
+            width: 90%; 
+            z-index: 1000;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        }
+        
+        /* Logo container with brand name */
+        #nav-logo { 
+            display: flex; 
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+        
+        #nav-logo img { 
+            height: 35px; 
+            width: auto;
+        }
+        
+        .brand-name {
+            color: var(--title-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        
+        .brand-name span {
+            color: var(--skin-color);
+            font-weight: 700;
+        }
+        
+        /* Desktop: nav-menu contains all links and is flexed */
+        #nav-menu { 
+            display: flex; 
+            gap: 1.5rem; 
+            margin-left: auto; 
+            align-items: center; 
+        }
+
+        /* Nav links and CTA */
+        .nav-link { 
+            color: var(--text-color); 
+            transition: color 0.3s, transform 0.2s; 
+            font-weight: 500; 
+        }
+        .nav-link:hover { 
+            color: var(--skin-color); 
+            transform: translateY(-1px); 
+        }
+        .nav-cta {
+            background: linear-gradient(90deg, var(--skin-color), #d43a00);
+            color: var(--title-color); 
+            padding: 0.5rem 1rem; 
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(255, 80, 17, 0.4); 
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 600;
+            white-space: nowrap; /* Ensure text stays on one line */
+        }
+        .nav-cta:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 8px rgba(255, 80, 17, 0.5); 
+        }
+        .has-submenu { position: relative; }
+        
+        /* Submenu Default State (Hidden - Desktop) */
+        .submenu-courses {
+            position: absolute; 
+            top: 100%; 
+            left: 50%; 
+            transform: translateX(-50%);
+            background: var(--box-color); 
+            border-radius: 0.5rem; 
+            padding: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
+            opacity: 0; 
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, top 0.3s; 
+            width: 250px;
+            z-index: 1001;
+        }
+        
+        /* Submenu Active State (Shown via JavaScript click - Desktop) */
+        .submenu-courses.active { 
+            opacity: 1; 
+            visibility: visible;
+            top: calc(100% + 10px);
+        }
+        .submenu-link { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.75rem; 
+            color: var(--text-color); 
+            padding: 0.5rem; 
+            border-radius: 0.25rem; 
+            transition: background-color 0.3s, color 0.3s; 
+        }
+        .submenu-link:hover { 
+            background-color: rgba(255, 80, 17, 0.1); 
+            color: var(--skin-color); 
+        }
+        .submenu-link i { width: 15px; text-align: center; }
+
+        /* Mobile visibility controls (Default/Desktop state) */
+        #mobile-menu-toggle { 
+            display: none; 
+            border: none;
+            background: transparent;
+            color: var(--skin-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            margin-left: auto;
+        }
+        .nav-cta.mobile-cta-only { display: none; }
+        .nav-cta.desktop-cta-only { display: block; }
+
+        /* =========================== */
+        /* SECTION 5: BACK TO TOP BUTTON */
+        /* =========================== */
+        #back-to-top {
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px;
+            width: 40px; 
+            height: 40px;
+            background: url('https://bucket.mlcdn.com/a/3336/3336910/images/972c5065cffe83955d5322557dcdce28eca170e5.png') no-repeat center center;
+            background-size: cover;
+            border: none; 
+            border-radius: 50%;
+            cursor: pointer; 
+            opacity: 0; 
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            z-index: 999;
+        }
+        #back-to-top.show { 
+            opacity: 1; 
+            visibility: visible; 
+        }
+        #back-to-top:hover { 
+            transform: scale(1.1); 
+        }
+
+        /* =========================== */
+        /* SECTION 6: FOOTER STYLES */
+        /* =========================== */
+        .footer { 
+            padding-top: 2rem; 
+            margin-top: 3rem;
+        }
+        .footer-bg { 
+            background-color: var(--box-color); 
+            padding: 3rem 0 3.5rem; 
+        }
+        .footer-container { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            column-gap: 1.6rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .footer-title { 
+            font-size: var(--h3-font-size); 
+            margin-bottom: 0.25rem; 
+            color: var(--title-color); 
+        }
+        .footer-subtitle { 
+            font-size: var(--small-font-size); 
+            color: var(--title-color); 
+        }
+        .footer-links { 
+            list-style: none; 
+            display: flex; 
+            justify-self: center; 
+            column-gap: 2rem; 
+            padding: 0;
+            margin: 0;
+        }
+        .footer-links a { 
+            color: var(--title-color); 
+            transition: color 0.3s; 
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .footer-links a:hover { 
+            color: var(--skin-color); 
+        }
+        .footer-socials { 
+            justify-self: flex-end; 
+            display: flex; 
+            align-items: center; 
+            gap: var(--mb15); 
+        }
+        .footer-social { 
+            font-size: 1.25rem; 
+            color: var(--title-color); 
+            transition: color 0.3s; 
+            text-decoration: none;
+        }
+        .footer-social:hover { 
+            color: var(--skin-color); 
+            cursor: pointer; 
+        }
+        .footer-copy { 
+            font-size: var(--smaller-font-size); 
+            text-align: center; 
+            margin-top: 4.5rem; 
+            color: var(--title-color);
+        }
+        .footer-copy a { 
+            color: var(--title-color); 
+            text-decoration: none;
+        }
+        .footer-copy a:hover { 
+            color: var(--skin-color); 
+        }
+        .footer-brand { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start; 
+            text-align: left; 
+            gap: 0.5rem; 
+        }
+        .footer-brand-text { 
+            text-align: left; 
+        }
+        .footer-logo { 
+            width: 30px; 
+            height: auto; 
+            display: block; 
+        }
+        .footer-logo:hover {
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        /* =========================== */
+        /* SECTION 7: MOBILE RESPONSIVENESS */
+        /* =========================== */
+        @media screen and (max-width: 980px) {
+            body { 
+                padding-top: 6rem; 
+                overflow-x: hidden;
+            }
+            
+            /* Mobile Navigation */
+            #nav-bar {
+                padding: 0.5rem 1rem;
+                justify-content: space-between;
+                box-shadow: none; 
+                width: 100%;
+                max-width: 100%;
+                top: 0;
+                left: 0;
+                transform: none;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+            
+            /* Hide brand name on mobile to save space */
+            .brand-name {
+                display: none;
+            }
+            
+            #mobile-menu-toggle {
+                display: block;
+                position: static;
+                transform: none;
+                z-index: 1002;
+                margin-left: auto;
+            }
+            
+            #nav-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: var(--body-color); 
+                z-index: 1001; 
+                flex-direction: column;
+                justify-content: flex-start; 
+                align-items: center; 
+                gap: 1.5rem;
+                padding: 6rem 1.5rem 2rem;
+                margin: 0;
+            }
+
+            #nav-menu.mobile-open {
+                display: flex;
+                padding: 6rem 1.5rem 2rem;
+                overflow-y: auto;
+            }
+            
+            #nav-menu .nav-link,
+            #nav-menu .nav-item {
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: var(--title-color);
+                padding: 0.5rem 0;
+                margin: 0;
+                width: auto; 
+                text-align: center;
+            }
+            
+            #nav-menu .nav-item { 
+                margin: 0; 
+                padding: 0; 
+            }
+
+            #nav-menu .nav-link:hover {
+                color: var(--skin-color);
+                transform: none;
+            }
+            
+            /* Courses Dropdown (Mobile alignment) */
+            .has-submenu {
+                display: flex;
+                flex-direction: column;
+                align-items: center; 
+                width: 100%; 
+            }
+            
+            .submenu-courses {
+                position: static; 
+                width: 100%; 
+                background: transparent;
+                box-shadow: none;
+                padding: 0; 
+                margin: 0.5rem 0 0 0; 
+                opacity: 0; 
+                visibility: hidden;
+                display: none;
+                max-height: 0;
+                overflow: hidden;
+                transition: opacity 0.3s, max-height 0.3s;
+                transform: none; 
+                flex-direction: column; 
+                align-items: flex-start; 
+                text-align: left;
+                border-radius: 0;
+            }
+            
+            .submenu-courses.active { 
+                display: flex;
+                opacity: 1;
+                visibility: visible;
+                max-height: 400px;
+                padding: 0; 
+                margin-top: 0.5rem; 
+            }
+            
+            .submenu-courses .submenu-link {
+                font-size: 1.1rem;
+                padding: 0.8rem 1rem 0.8rem 2.5rem;
+                justify-content: flex-start; 
+                width: 100%;
+                text-align: left;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            
+            /* Mobile CTA button */
+            .nav-cta.mobile-cta-only {
+                padding: 0.8rem 2rem; 
+                width: 100%;
+                max-width: none; 
+                white-space: nowrap;
+                font-size: 1.2rem; 
+                font-weight: 700;
+                margin-top: 1rem; 
+                display: block !important; 
+                align-self: center; 
+                text-align: center;
+            }
+            
+            /* Hide desktop items on mobile */
+            .nav-cta.desktop-cta-only,
+            .nav-cta:not(.mobile-cta-only) { 
+                display: none !important; 
+            }
+
+            /* Mobile Footer */
+            .footer-container {
+                grid-template-columns: 1fr;
+                row-gap: 2.5rem;
+                text-align: center;
+            }
+            
+            .footer-brand {
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+            }
+            .footer-brand-text {
+                text-align: center;
+            }
+            
+            .footer-socials {
+                justify-content: center;
+                justify-self: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                row-gap: 1.2rem;
+                justify-self: center;
+            }
+            
+            .footer-bg {
+                padding: 2rem 0 2.5rem;
+            }
+            
+            .footer-copy {
+                margin-top: var(--mb3);
+                padding: 0 1rem;
+            }
+        }
+
+        /* Tablet/Desktop responsiveness */
+        @media screen and (min-width: 981px) and (max-width: 1024px) {
+            #nav-bar {
+                width: 95%;
+                padding: 0.5rem 1rem;
+            }
+            
+            #nav-menu {
+                gap: 1rem;
+            }
+            
+            /* Slightly smaller brand name on tablet */
+            .brand-name {
+                font-size: 1rem;
+            }
+        }
+
+        /* Desktop: Ensure correct visibility when not mobile */
+        @media screen and (min-width: 981px) {
+            #nav-menu {
+                display: flex !important;
+            }
+            .nav-cta.desktop-cta-only { 
+                display: block !important; 
+            }
+        }
+
+        /* =========================== */
+        /* SECTION 8: PAGE LOADER STYLES */
+        /* =========================== */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .loader-header {
+            color: white;
+            font-size: 24px;
+            font-family: var(--body-font);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .progress {
+            width: 272.8px;
+            height: 41.7px;
+            border-radius: 28.8px;
+            color: var(--skin-color);
+            background-color: #000;
+            border: 2.9px solid;
+            position: relative;
+        }
+
+        .progress::before {
+            content: "";
+            position: absolute;
+            margin: 2.9px;
+            inset: 0 100% 0 0;
+            border-radius: inherit;
+            background: currentColor;
+            animation: progress-pf82op 1.5s forwards;
+        }
+
+        @keyframes progress-pf82op {
+            100% {
+                inset: 0;
+            }
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* =========================== */
+        /* SECTION 9: PAGE-SPECIFIC STYLES */
+        /* =========================== */
+        
+        /* Original page styles, adjusted for Project Freedom branding */
+        .page {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+            background-color: var(--body-color);
+        }
+
+        /* ----- centered title block ----- */
+        .title-section {
+            text-align: center;
+            padding: 0 1.5rem 2rem 1.5rem;
+            background-color: var(--body-color);
+            color: var(--title-color);
+            z-index: 5;
+            margin-bottom: 0px;
+        }
+
+        .title-section h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.7);
+            color: var(--skin-color);
+        }
+
+        .title-section p {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            font-weight: 300;
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto;
+            padding-bottom: 0.75rem;
+            color: var(--text-color);
+        }
+
+        /* ----- ROW: side by side forever with squares ----- */
+        .split-row {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            background-color: var(--body-color);
+            gap: 0;
+            /* Force row to only take the height of its content (the squares) */
+            flex: 0 0 auto;
+            margin-bottom: 0; /* Ensure no bottom margin */
+        }
+
+        /* columns: always 1:1 square aspect ratio on ALL screens */
+        .col {
+            flex: 1 1 50%;
+            min-width: 0;
+            width: 50%;
+            max-width: 50%;
+            aspect-ratio: 1 / 1;           /* FORCE SQUARE ON EVERY SCREEN */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            text-decoration: none;
+            display: block;
+            opacity: 0;
+            animation: fadeInImage 1.2s ease forwards;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.5);
+            will-change: transform;
+            box-shadow: none;
+            border: none;
+            margin-bottom: 0; /* Ensure no bottom margin */            
+        }
+
+        /* Remove desktop stretch - now squares on all sizes */
+        @media screen and (min-width: 641px) {
+            .split-row {
+                flex: 0 0 auto;            /* DON'T grow - keep square height */
+                align-items: flex-start;
+            }
+            .col {
+                min-height: 0;              /* remove min-height */
+                height: auto;                /* let aspect-ratio control height */
+            }
+        }
+
+        /* ----- MOBILE (already handled by base square rule) ----- */
+        @media screen and (max-width: 640px) {
+            .title-section {
+                padding: 0 1rem 1.5rem 1rem;
+            }
+        }
+
+        /* even smaller screens */
+        @media screen and (max-width: 400px) {
+            .title-section h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* images for left and right hand with pill */
+        .col-left {
+            background-image: url('https://bucket.mlcdn.com/a/3336/3336910/images/d78278dbc233849a4d73a3080184f250c3adb354.png');
+            animation-delay: 0.1s;
+        }
+
+        .col-right {
+            background-image: url('https://bucket.mlcdn.com/a/3336/3336910/images/528bbf719e13badbcf0ca310a2bbc65a874468e9.png');
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeInImage {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* hover effect */
+        @media (hover: hover) {
+            .col:hover {
+                transform: scale(1.05);
+                z-index: 10;
+            }
+        }
+
+        .col:focus-visible {
+            outline: 3px solid var(--skin-color);
+            outline-offset: -3px;
+            transform: scale(1.03);
+        }
+
+        .col:active {
+            transform: scale(0.98);
+            filter: brightness(0.9);
+            transition: transform 0.1s;
+        }
+
+        .col::after {
+            display: none;
+        }
+
+        /* ensure black everywhere */
+        body, .page, .split-row, .title-section {
+            background-color: var(--body-color);
+           
+        }
+
+
+
+        /* =========================== */
+        /* SECTION 10: BANNER STYLES - REDUCED MARGIN TOP */
+        /* =========================== */
+        .promise-banner {
+            width: 100%;
+            background-color: var(--box-color);
+            padding: 4rem 1rem 4rem 1rem;
+            margin: 0 0 0 0; /* REMOVED top margin completely - was 0.5rem */
+            border-radius: 2rem 2rem 2rem 2rem;
+            margin-top: 0px;
+        }
+
+        .banner-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+			margin-top: 0px;
+}
+
+        .banner-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Hazard icon styles */
+        .hazard-icon {
+            font-size: 3.5rem;
+            color: var(--skin-color);
+            margin-bottom: 0.75rem;
+            display: inline-block;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .banner-header h2 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--title-color);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .banner-header h3 {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--skin-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .banner-header p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Social Proof Badges - Updated for mobile 1 per row */
+        .badges-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .badge-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.75rem;
+            flex: 0 1 auto;
+            width: auto;
+            min-width: 140px;
+        }
+
+        .badge-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 80, 17, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--skin-color);
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .badge-item:hover .badge-icon {
+            transform: translateY(-5px);
+            background: rgba(255, 80, 17, 0.2);
+        }
+
+        .badge-text {
+            font-weight: 600;
+            color: var(--title-color);
+            font-size: 1rem;
+        }
+
+        .badge-subtext {
+            font-size: 0.85rem;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        /* Mobile adjustments - 1 item per row */
+        @media screen and (max-width: 640px) {
+            .promise-banner {
+                padding: 1.5rem 1rem 2rem 1rem;
+                border-radius: 1.5rem;
+                margin-top: 0; /* Ensure no margin on mobile */
+            }
+            
+            .badges-grid {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                width: 100%;
+            }
+            
+            .badge-item {
+                width: 100%;
+                max-width: 280px;
+                min-width: auto;
+            }
+            
+            .badge-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+            
+            .hazard-icon {
+                font-size: 2rem;
+            }
+        }
+
+        /* Tablet adjustments - 3 items per row */
+        @media screen and (min-width: 641px) and (max-width: 900px) {
+            .badges-grid {
+                gap: 1.5rem;
+            }
+            
+            .badge-item {
+                min-width: 120px;
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+  /* Add these styles to your CSS file */
+.dark-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0d0d0d;
+    opacity: 0;
+    z-index: 1000;
+    pointer-events: none;
+    transition: opacity 0.5s ease-out;
+}
+
+.logo-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    width: 400px; /* Adjusted for your logo */
+    height: 400px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    z-index: 1001;
+    pointer-events: none;
+    transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                opacity 1.5s ease-out;
+}
+
+.logo-overlay.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.logo-overlay.fade-out {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Optional: Add cursor pointer to indicate clickability */
+.col-right {
+    cursor: pointer;
+}
+
+/* Click effect */
+.col-right:active {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+    transition: transform 0.1s, filter 0.1s;
+}      
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </style>
+
+<!-- =========================== -->
+<!-- SECTION 11: PAGE LOADER SCRIPT -->
+<!-- =========================== -->
+<script>
+    // --- Page Loader Logic ---
+    function showLoader() {
+        const loader = document.createElement('div');
+        loader.className = 'page-loader';
+        loader.innerHTML = `
+            <div class="loader-header">Wait for it...</div>
+            <div class="progress"></div>
+        `;
+        document.body.appendChild(loader);
+        return loader;
+    }
+
+    function initLoader() {
+        const loader = showLoader();
+        setTimeout(() => {
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 300);
+        }, 1500);
+    }
+
+    document.addEventListener('DOMContentLoaded', initLoader);
+</script>
+
+</head>
+<body>
+
+    <!-- =========================== -->
+    <!-- SECTION 12: NAVIGATION BAR HTML -->
+    <!-- =========================== -->
+    <nav id="nav-bar">
+        <a href="/" id="nav-logo">
+            <img src="https://bucket.mlcdn.com/a/3336/3336910/images/cb4b37522607da45b7f91a8253f835eaf09b1f9e.png" alt="Project Freedom Logo" />
+            <span class="brand-name">Project <span>Freedom</span></span>
+        </a>
+        
+        <!-- MOBILE TOGGLE BUTTON -->
+        <button id="mobile-menu-toggle" aria-label="Open Menu">
+            <i class="fa-solid fa-bars" id="toggle-icon"></i>
+        </button>
+        
+        <div id="nav-menu">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/about" class="nav-link">About</a>            
+            
+            <a href="/pricing-page" class="nav-link">Pricing</a>
+             
+            
+            <!-- Courses Dropdown -->
+            <div class="nav-item has-submenu">
+                <a href="#" class="nav-link" id="courses-link">Resources <i class="fa-solid fa-angle-down" style="font-size: 0.8em;"></i></a>
+                
+                <div class="submenu-courses" id="courses-submenu">
+                    <a href="/courses#all" class="submenu-link"><i class="fa-solid fa-list-ul"></i> All Resources</a>
+                    <a href="/courses#foundation" class="submenu-link"><i class="fa-solid fa-brain"></i> AI Foundation</a>
+                    <a href="/courses#prompting" class="submenu-link"><i class="fa-solid fa-wand-magic-sparkles"></i> Prompt Craftsmanship</a>
+                    <a href="#building-ai-brain" class="submenu-link"><i class="fa-solid fa-database"></i> Building Your AI Brain</a>
+                    <a href="#autmated-ai-systems" class="submenu-link"><i class="fa-regular fa-building"></i> Automated AI Systems</a>
+                </div>
+            </div>            
+                   
+            
+            <a href="/contact" class="nav-link">Contact</a>
+            
+        
+            <!-- DESKTOP CTA -->
+            <a href="/login" class="nav-cta desktop-cta-only">MEMBER LOGIN</a>
+            
+            <!-- MOBILE CTA -->
+            <a href="/login" class="nav-cta mobile-cta-only">MEMBER LOGIN</a>
+        </div>
+        
+    </nav>
+
+    <!-- =========================== -->
+    <!-- SECTION 13: MAIN CONTENT AREA -->
+    <!-- =========================== -->
+    <main>
+        <div class="page">
+            <div class="title-section">
+                <h1>Choose Your Path</h1>
+                <p>Black · Orange · the choice is yours</p>
+            </div>
+
+            <div class="split-row">
+                <a href="https://projectfreedom.club" 
+                   class="col col-left" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   aria-label="Choose black pill (left hand)"></a>
+
+                <a href="https://projectfreedom.club" 
+                   class="col col-right" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   aria-label="Choose orange pill (right hand)"></a>
+            </div>
+        </div>
+
+    </main>
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- =========================== -->
+    <!-- SECTION 15: BACK TO TOP BUTTON -->
+    <!-- =========================== -->
+    <button id="back-to-top" aria-label="Back to Top"></button>
+    
+    <!-- =========================== -->
+    <!-- SECTION 16: FOOTER HTML -->
+    <!-- =========================== -->
+    <footer class="footer">
+        <div class="footer-bg">
+            <div class="footer-container container"> 
+                <!-- Logo/Brand Block -->
+                <div class="footer-brand">
+                    <img src="https://bucket.mlcdn.com/a/3336/3336910/images/cb4b37522607da45b7f91a8253f835eaf09b1f9e.png" alt="Project Freedom Logo" class="footer-logo">
+                    <div class="footer-brand-text">
+                        <h3 class="footer-title">Project Freedom</h3>
+                        <span class="footer-subtitle">Design Freedom From Within</span>
+                    </div>
+                </div>
+                    
+                <!-- Footer Links -->
+                <ul class="footer-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/courses">Courses</a></li>
+                    <li><a href="/pricing-page">Pricing</a></li>
+                    <li><a href="/resources">Resources</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+
+                <!-- Social Icons -->
+                <div class="footer-socials">
+                    <a href="https://www.youtube.com/" target="_blank" class="footer-social" aria-label="Youtube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="https://www.facebook.com/" target="_blank" class="footer-social" aria-label="Facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/" target="_blank" class="footer-social" aria-label="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/" target="_blank" class="footer-social" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+            <p class="footer-copy">Copyright &#169; 2024 • All rights reserved.<br>Developed with 🧡 by <a href="https://bebelldigitalsolutions.com">Bebell Digital Solutions</a></p>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+   
+    
+<!-- Add this before closing body tag -->
+<!-- Tunnel Canvas -->
+<canvas id="tunnelCanvas" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 999;"></canvas>
+
+<!-- Hidden Portal Card (optional - can be removed if not needed) -->
+<div id="portalCard" style="display: none;"></div>
+
+
+
+    <!-- =========================== -->
+    <!-- SECTION 17: BASE JAVASCRIPT -->
+    <!-- =========================== -->
+
+   <script>
+       
+   // ============================================
+// SECTION 1: ANIMATION CONFIGURATION
+// ============================================
+// Update these values to customize the animation
+const animationConfig = {
+    // Sound effect URL - change this to use a different sound
+    soundUrl: 'https://cdn.shopify.com/s/files/1/0242/0175/6777/files/mixkit-futuristic-cinematic-noise-whip-1518.wav?v=1748880406',
+    
+    // Where to redirect after animation - change this to your destination
+    destinationUrl: 'https://projectfreedom.club',
+    
+    // Primary color for tunnel (in hex) - change to match your brand
+    primaryColor: 0xff5011, // Orange
+    
+    // Animation timing (in milliseconds)
+    timings: {
+        cardFadeOut: 500,        // How long card fade takes
+        darkOverlayStart: 1000,   // When dark overlay starts
+        logoShowDelay: 1500,      // When logo appears (from click)
+        tunnelHideDelay: 3000,    // When tunnel hides
+        soundFadeStart: 3500,     // When sound starts fading
+        logoFadeStart: 4000,      // When logo starts fading
+        redirectDelay: 4500       // Total time before redirect
+    },
+    
+    // Logo overlay settings
+    logo: {
+        url: 'https://bucket.mlcdn.com/a/3336/3336910/images/cb4b37522607da45b7f91a8253f835eaf09b1f9e.png',
+        width: '400px',
+        height: '400px'
+    }
+};
+
+// ============================================
+// SECTION 2: AUDIO SETUP
+// ============================================
+// Remove this section if you don't want sound
+const cinematicWhip = new Audio(animationConfig.soundUrl);
+cinematicWhip.preload = 'auto';
+cinematicWhip.load();
+
+// Audio fade helper - remove if removing sound
+function fadeAudio(audioElement, targetVolume, duration) {
+    const initialVolume = audioElement.volume;
+    const delta = targetVolume - initialVolume;
+    const startTime = Date.now();
+    
+    function updateVolume() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        audioElement.volume = initialVolume + delta * progress;
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateVolume);
+        }
+    }
+    
+    updateVolume();
+}
+
+// ============================================
+// SECTION 3: THREE.JS VARIABLES
+// ============================================
+// Remove this section if you don't want the 3D tunnel
+let animationId = null;
+let renderer, scene, camera, tube, stars;
+
+// ============================================
+// SECTION 4: TUNNEL ANIMATION FUNCTIONS
+// ============================================
+// Remove this entire section if you don't want the 3D tunnel
+
+// Create circular path for tunnel
+function createCircularPath() {
+    const curve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0, 0, 0),
+        new THREE.Vector3(20, 10, -50),
+        new THREE.Vector3(40, -10, -100),
+        new THREE.Vector3(60, 15, -150),
+        new THREE.Vector3(50, -5, -200),
+        new THREE.Vector3(0, 0, -250),
+        new THREE.Vector3(-100, 0, -200),
+        new THREE.Vector3(-150, 0, -100),
+        new THREE.Vector3(-100, 0, 0),
+        new THREE.Vector3(-50, 10, 100),
+        new THREE.Vector3(-20, -10, 150),
+        new THREE.Vector3(0, 0, 200)
+    ]);
+    
+    curve.tension = 0.1;
+    return curve;
+}
+
+// Initialize Three.js tunnel
+function initTunnel(primaryColor) {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    
+    // Renderer with transparent background
+    renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById("tunnelCanvas"),
+        antialias: true,
+        alpha: true
+    });
+    renderer.setSize(w, h);
+    renderer.setClearColor(0x000000, 0);
+    
+    // Scene
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x000000, 0.005);
+    
+    // Camera
+    camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
+    
+    // Create path
+    const path = createCircularPath();
+    
+    // Tube geometry
+    const tubeGeometry = new THREE.TubeGeometry(
+        path,
+        200,
+        3,
+        12,
+        false
+    );
+    
+    // Tube material
+    const material = new THREE.MeshBasicMaterial({
+        side: THREE.BackSide,
+        wireframe: true,
+        color: primaryColor,
+        transparent: true,
+        opacity: 0.8
+    });
+    
+    // Tube mesh
+    tube = new THREE.Mesh(tubeGeometry, material);
+    scene.add(tube);
+    
+    // Stars
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsMaterial = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 1,
+        transparent: true
+    });
+    
+    const starsPositions = new Float32Array(2000 * 3);
+    for (let i = 0; i < 2000; i++) {
+        starsPositions[i * 3] = (Math.random() - 0.5) * 2000;
+        starsPositions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+        starsPositions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+    }
+    
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+    stars = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(stars);
+    
+    // Animation
+    let pct = 0;
+    const duration = 2.5;
+    const startTime = Date.now();
+    
+    function animate() {
+        const elapsed = (Date.now() - startTime) / 1000;
+        pct = Math.min(elapsed / duration, 1);
+        
+        const lookAheadPct = Math.min(pct + 0.01, 1);
+        const pt1 = path.getPointAt(pct);
+        const pt2 = path.getPointAt(lookAheadPct);
+        
+        camera.position.set(pt1.x, pt1.y, pt1.z);
+        camera.lookAt(pt2);
+        
+        renderer.render(scene, camera);
+        
+        if (pct < 1) {
+            animationId = requestAnimationFrame(animate);
+        }
+    }
+    
+    animate();
+    
+    // Handle resize
+    window.addEventListener('resize', () => {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+    });
+}
+
+// Cleanup Three.js resources
+function cleanupTunnel() {
+    if (animationId) {
+        cancelAnimationFrame(animationId);
+    }
+    if (renderer) {
+        renderer.dispose();
+    }
+    if (scene) {
+        while(scene.children.length > 0){ 
+            scene.remove(scene.children[0]); 
+        }
+    }
+    const canvasTunnel = document.getElementById("tunnelCanvas");
+    if (canvasTunnel) {
+        canvasTunnel.style.display = "none";
+    }
+}
+
+// ============================================
+// SECTION 5: OVERLAY CREATION FUNCTIONS
+// ============================================
+// Remove this section if you don't want the dark overlay and logo
+
+function createOverlayElements() {
+    // Create dark overlay
+    const darkOverlay = document.createElement("div");
+    darkOverlay.className = "dark-overlay";
+    document.body.appendChild(darkOverlay);
+    
+    // Create logo overlay
+    const logoOverlay = document.createElement("div");
+    logoOverlay.className = "logo-overlay";
+    logoOverlay.style.backgroundImage = `url('${animationConfig.logo.url}')`;
+    logoOverlay.style.width = animationConfig.logo.width;
+    logoOverlay.style.height = animationConfig.logo.height;
+    document.body.appendChild(logoOverlay);
+    
+    return { darkOverlay, logoOverlay };
+}
+
+function removeOverlayElements() {
+    const darkOverlay = document.querySelector('.dark-overlay');
+    const logoOverlay = document.querySelector('.logo-overlay');
+    
+    if (darkOverlay) darkOverlay.remove();
+    if (logoOverlay) logoOverlay.remove();
+}
+
+// ============================================
+// SECTION 6: MAIN ANIMATION TRIGGER
+// ============================================
+// This is the core function that starts everything
+
+function startPortalAnimation(clickedElement, destinationUrl) {
+    console.log('Animation starting, will redirect to:', destinationUrl);
+    
+    // Use destination from config if not provided
+    const redirectUrl = destinationUrl || animationConfig.destinationUrl;
+    
+    // SECTION 6A: Click effect
+    clickedElement.style.pointerEvents = 'none';
+    clickedElement.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        clickedElement.style.transform = '';
+    }, 200);
+    
+    // SECTION 6B: Play sound (remove if you don't want sound)
+    cinematicWhip.currentTime = 0;
+    cinematicWhip.volume = 1.0;
+    cinematicWhip.play().catch(e => console.log('Audio play failed:', e));
+    
+    // SECTION 6C: Show tunnel (remove if you don't want 3D)
+    const canvasTunnel = document.getElementById("tunnelCanvas");
+    canvasTunnel.style.display = "block";
+    initTunnel(animationConfig.primaryColor);
+    
+    // SECTION 6D: Create overlays
+    const { darkOverlay, logoOverlay } = createOverlayElements();
+    
+    // SECTION 6E: Animation timeline
+    // Dark overlay starts
+    setTimeout(() => {
+        darkOverlay.style.opacity = "0.1";
+        
+        const darkFadeInterval = setInterval(() => {
+            const currentOpacity = parseFloat(darkOverlay.style.opacity || "0");
+            if (currentOpacity < 1) {
+                darkOverlay.style.opacity = (currentOpacity + 0.05).toString();
+            } else {
+                clearInterval(darkFadeInterval);
+            }
+        }, 50);
+    }, animationConfig.timings.darkOverlayStart);
+    
+    // Show logo
+    setTimeout(() => {
+        logoOverlay.classList.add("visible");
+    }, animationConfig.timings.logoShowDelay - 1000); // Adjust relative to click
+    
+    // Hide tunnel
+    setTimeout(() => {
+        cleanupTunnel();
+        darkOverlay.style.backgroundColor = "#0d0d0d";
+    }, animationConfig.timings.tunnelHideDelay - 1000);
+    
+    // Fade out sound
+    setTimeout(() => {
+        fadeAudio(cinematicWhip, 0, 500);
+    }, animationConfig.timings.soundFadeStart - 1000);
+    
+    // Fade out logo
+    setTimeout(() => {
+        logoOverlay.classList.add("fade-out");
+    }, animationConfig.timings.logoFadeStart - 1000);
+    
+    // Redirect
+    setTimeout(() => {
+        window.location.href = redirectUrl;
+    }, animationConfig.timings.redirectDelay - 1000);
+}
+
+// ============================================
+// SECTION 7: CLICK HANDLER SETUP
+// ============================================
+// This attaches the animation to the right image
+
+document.addEventListener('DOMContentLoaded', function() {
+    // SECTION 7A: Right image (with animation)
+    const rightImageLink = document.querySelector('.col-right');
+    
+    if (rightImageLink) {
+        console.log('Right image found, attaching animation...');
+        
+        // Store the original destination
+        const originalHref = rightImageLink.getAttribute('href');
+        
+        // Remove default navigation
+        rightImageLink.removeAttribute('href');
+        rightImageLink.removeAttribute('target');
+        
+        // Add click handler
+        rightImageLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Right image clicked, starting animation...');
+            startPortalAnimation(this, originalHref);
+            
+            return false;
+        });
+        
+        // Keep visual appearance
+        rightImageLink.style.cursor = 'pointer';
+    }
+    
+    // SECTION 7B: Left image (normal link)
+    const leftImageLink = document.querySelector('.col-left');
+    if (leftImageLink) {
+        // Ensure it opens in new tab
+        leftImageLink.setAttribute('target', '_blank');
+        console.log('Left image configured as normal link');
+    }
+});
+
+// ============================================
+// SECTION 8: CLEANUP ON PAGE UNLOAD
+// ============================================
+// Optional: Clean up when leaving the page
+
+window.addEventListener('beforeunload', function() {
+    cleanupTunnel();
+    removeOverlayElements();
+});
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+</body>
+</html>
