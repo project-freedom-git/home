@@ -330,11 +330,52 @@
 }
 
 /* ===========================================
-   FULL WIDTH BANNER WITH H1 OVERLAY - UPDATED
+   BANNER SECTION WITH TITLE ABOVE (ON TOP OF IMAGE)
+   Title centered with max-width 780px
 =========================================== */
-.full-width-banner {
+.banner-section {
     width: 100%;
     position: relative;
+    background: #000;
+}
+
+/* Title container - positioned above the banner image */
+.banner-title-container {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 3rem 1.5rem 1.5rem 1.5rem;
+    background: linear-gradient(180deg, #0a0a0a 0%, #000 100%);
+}
+
+.banner-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    color: #ffffff;
+    max-width: 780px;
+    margin: 0 auto;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, #ff7a33 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 10px rgba(255, 80, 17, 0.3);
+}
+
+/* Optional: add a subtle glow effect */
+.banner-title span {
+    background: linear-gradient(135deg, #ff5011, #ff7a33);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Full width image banner */
+.full-width-banner {
+    width: 100%;
     display: block;
     overflow: hidden;
     line-height: 0;
@@ -352,63 +393,7 @@
     transform: scale(1.02);
 }
 
-/* Banner overlay container for H1 title */
-.banner-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%);
-    z-index: 2;
-    pointer-events: none;
-}
-
-/* H1 Title Styling */
-.banner-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: clamp(1.8rem, 5vw, 3.5rem);
-    font-weight: 800;
-    text-align: center;
-    color: #ffffff;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    max-width: 90%;
-    margin: 0 auto;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
-    border-radius: 20px;
-    display: inline-block;
-    animation: fadeInUp 0.8s ease-out;
-}
-
-/* Subtle gradient accent on title */
-.banner-title span {
-    background: linear-gradient(135deg, #ff5011, #ff7a33);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
-}
-
-/* Animation for H1 */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Optional: add a subtle overlay effect on hover for image */
+/* Optional overlay effect on hover */
 .full-width-banner {
     position: relative;
 }
@@ -431,38 +416,34 @@
     opacity: 1;
 }
 
-/* Ensure the banner wrapper sits flush */
-.banner-wrapper {
-    margin-bottom: 0;
-    background: #000;
-}
-
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
+    .banner-title-container {
+        padding: 2rem 1rem 1rem 1rem;
+    }
+    
+    .banner-title {
+        font-size: clamp(1.5rem, 5vw, 2.2rem);
+        line-height: 1.4;
+    }
+    
     .full-width-banner img {
         min-height: 180px;
         object-fit: cover;
     }
-    
-    .banner-title {
-        backdrop-filter: blur(3px);
-        padding: 0.75rem 1.25rem;
-        border-radius: 16px;
-        font-size: clamp(1.4rem, 6vw, 2.2rem);
-    }
 }
 
 @media screen and (max-width: 480px) {
-    .full-width-banner img {
-        min-height: 140px;
+    .banner-title-container {
+        padding: 1.5rem 1rem 0.75rem 1rem;
     }
     
     .banner-title {
-        padding: 0.5rem 1rem;
-        border-radius: 12px;
-        font-size: clamp(1.2rem, 5vw, 1.8rem);
-        line-height: 1.4;
-        width: 90%;
+        font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+    }
+    
+    .full-width-banner img {
+        min-height: 140px;
     }
 }
    
@@ -673,18 +654,20 @@
     
 
 <!-- =========================================== -->
-<!-- FULL WIDTH IMAGE BANNER WITH H1 TITLE OVERLAY -->
+<!-- BANNER SECTION: TITLE ON TOP OF THE IMAGE (above it, centered, max-width 780px) -->
 <!-- =========================================== -->
-<div class="banner-wrapper">
+<div class="banner-section">
+    <!-- Title positioned above the banner image -->
+    <div class="banner-title-container">
+        <h1 class="banner-title">Get Unlimited Access to <span>Knowledge, Tools, Templates,</span> and Community</h1>
+    </div>
+    <!-- Full width image banner -->
     <div class="full-width-banner">
-        <img src="https://bucket.mlcdn.com/a/3336/3336910/images/1e8a5512221181ce647c38032af0b1867186e8d2.png" 
+        <img src="https://bucket.mlcdn.com/a/3336/3336910/images/3e31c110db420f0f6be9a4468abd8157b35490b5.png" 
              alt="Project Freedom - Digital Independence Banner" 
              loading="eager"
              width="1920"
              height="auto">
-        <div class="banner-overlay">
-            <h1 class="banner-title">Get Unlimited Access to <span>Knowledge, Tools, Templates,</span> and Community</h1>
-        </div>
     </div>
 </div>
 
