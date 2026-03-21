@@ -396,6 +396,9 @@ button path {
     }
 }
 
+
+
+
 /*===========================================
    05. HERO SECTION
 ===========================================*/
@@ -454,8 +457,6 @@ button path {
     filter: drop-shadow(0 0 8px rgba(255, 80, 17, 0.3));
     cursor: pointer;
 }
-
-
 
 
 .hero h1 {
@@ -840,12 +841,6 @@ button path {
 
 
 
-
-
-
-
-
-
 .stats-section {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -855,16 +850,6 @@ button path {
     max-width: 980px;
        cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -922,12 +907,6 @@ button path {
     color: var(--skin-color);
     transform: scale(1.1);
 }
-
-
-
-
-
-
 
 
 
@@ -1132,12 +1111,6 @@ button path {
 
 
 
-
-
-
-
-
-
 /*===========================================
    10. CAROUSEL SECTION
 ===========================================*/
@@ -1311,20 +1284,6 @@ button path {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*===========================================
    11. FOOTER
 ===========================================*/
@@ -1416,11 +1375,6 @@ button path {
 .footer-copy a:hover {
     color: var(--skin-color);
 }
-
-
-
-
-
 
 
 
@@ -1609,6 +1563,14 @@ button path {
     .top-menu-bar {
         padding: 0.5rem 1rem;
     }
+
+
+
+
+
+
+
+   
     
     .hero {
         height: auto;
@@ -1657,6 +1619,11 @@ button path {
     .stat-label {
         font-size: 1.125rem;
     }
+
+
+
+
+   
     
     #faq {
         padding: 3rem 0;
@@ -1682,6 +1649,11 @@ button path {
     .faq-question {
         font-size: 1.125rem;
     }
+
+
+
+
+   
     
     .subscribe-form {
         padding: 1.5rem;
@@ -1791,4 +1763,18 @@ button path {
         font-size: 1rem;
     }
     
-    #faq .section-title
+    #faq .section-title {
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+   
